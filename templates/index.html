@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+{%block title%}Home{%endblock%}
+
+{% block content %}
+<div class="container d-flex flex-column align-items-center my-5">
+    <h1>Countdown App</h1>
+    <small class="text-secondary">Decrement the count by clicking the button</small>
+    <div class="my-3">
+        <h1 class="display-6"><span id="count">{{ count }}</span></h1>
+    </div>
+    <button id="decrement-btn" type="button" class="btn btn-dark">Decrement</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('decrement-btn').addEventListener('click', function() {
+            fetch('/decrement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('count').textContent = data.count;
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}
